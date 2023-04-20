@@ -547,8 +547,17 @@ export default class LanguageLearner extends Plugin {
         if (this.settings.auto_pron) {
             let accent = this.settings.review_prons;
             let wordUrl =
-                `http://dict.youdao.com/dictvoice?type=${accent}&audio=` +
-                encodeURIComponent(word);
+                // `http://dict.youdao.com/dictvoice?type=${accent}&audio=` +
+                `https://dict.youdao.com/dictvoice?audio=` +
+                encodeURIComponent(word) +
+                `&le=fr&type=2`;
+            // ==== other possible tts
+            // ==== But for étouffer, `etouffe` is used to construct the url.
+            // let wordUrl =
+            // `https://www.collinsdictionary.com/sounds/hwd_sounds/fr_`+
+            // encodeURIComponent(word) +
+            // `.mp3`;
+            // console.log(wordUrl);
             playAudio(wordUrl);
         }
     }
