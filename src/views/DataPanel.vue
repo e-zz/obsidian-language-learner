@@ -20,7 +20,8 @@
                 </NTag>
             </NSpace>
             <NDataTable ref="table" size="small" :loading="loading" :data="data" :columns="collumns"
-                :row-key="makeRowKey" @update:checked-row-keys="handleCheck" :pagination="{ pageSize: 10 }" />
+                :row-key="makeRowKey" @update:checked-row-keys="handleCheck" :pagination="{ pageSize: 10 }" 
+                :row-props="handleRowClick"/>
         </NConfigProvider>
     </div>
 </template>
@@ -137,6 +138,25 @@ let makeRowKey = (row: Row) => row.expr;
 function handleCheck(rowKeys: DataTableRowKey[]) {
     rowKeysRef.value = rowKeys;
 }
+// TODO
+const handleRowClick =  (row: Row) => {
+        return {
+            style: "cursor: pointer;",
+            onClick: () => {
+        //         dispatchEvent(new CustomEvent('obsidian-data-review-search', {
+        //     detail: { expr: row.expr }
+        // }));
+                // plugin.queryWord(
+                //         row.expr,
+                //         selectSpan,
+                //         { x: e.pageX, y: e.pageY }
+                //     )
+                dispatchEvent(new CustomEvent('obsidian-langr-search', {
+            detail: { selection: row.expr, target:'', evtPosition: {x:0,y:0} }
+        }));
+            }
+        }
+    }
 
 let collumns = reactive<DataTableColumns<Row>>([
     // {
