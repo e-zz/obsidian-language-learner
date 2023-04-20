@@ -128,10 +128,11 @@ onMounted(() => {
     }
 
     .trans {
-        display: block;
+        // display: block;
+        color: #9CDCFE;
     }
 
-    li.dexamp.eg {
+    .dexamp.eg {
         font-style: italic;
         display: list-item;
         list-style-type: disc;
@@ -153,41 +154,59 @@ onMounted(() => {
         font-weight: 500;
     }
 
-    .daccord {
+    .phrase-block {
         margin: 10px 0;
-        background-color: #fff8e4d7;
+        margin-top: 5px;
+        background-color: #7f7f7fd7;
+        
         color: black;
         border-radius: 3px;
 
-        header {
+        
+        .phrase-title {
             font-weight: 500;
+            font-size: 1.2em;
             cursor: pointer;
-            line-height: 1.6em;
-        }
+            // line-height: 1.em;
 
-        section {
-            i {
-                margin-right: 3px;
-            }
-
-            i::before {
-                content: "+";
-            }
-
-            &>:last-child {
-                display: none;
-            }
-
-            &.expand {
-                i::before {
-                    content: "-";
-                }
-
-                &>:last-child {
-                    display: block;
-                }
+            .phrase.dphrase {
+                font-weight: 700;
             }
         }
+
+        .phrase-body {
+            
+            .ddef_block {
+                margin-left:2px;
+            }
+
+            .trans {
+                color: #fec400;
+            }
+        }
+        // .phrase-body {
+        //     i {
+        //         margin-right: 3px;
+        //     }
+
+        //     i::before {
+        //         content: "+";
+        //     }
+
+        //     &>:last-child {
+        //         display: none;
+        //     }
+
+        //     &.expand {
+        //         i::before {
+        //             content: "-";
+        //         }
+
+        //         &>:last-child {
+        //             display: block;
+        //         }
+        //     }
+        // }
 
         span.ti {
             margin-left: 10px;

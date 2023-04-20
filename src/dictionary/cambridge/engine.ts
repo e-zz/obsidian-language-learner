@@ -42,7 +42,7 @@ export const getSrcPage: GetSrcPageFunction = (text) => {
     switch (lang) {
         case 'en':
             return (
-                'https://dictionary.cambridge.org/search/direct/?datasetsearch=english&q=' +
+                'https://dictionary.cambridge.org/search/direct/?datasetsearch=french-english&q=' +
                 encodeURIComponent(
                     text
                         .trim()
@@ -88,6 +88,8 @@ export const search: SearchFunction<CambridgeResult> = async (
 
 function prune(doc: DocumentFragment): void {
     doc.querySelectorAll(".smartt, .grammar, .bb, .dimg, .xref").forEach(el => el.remove());
+    // .def-info contains freq information.
+    doc.querySelectorAll(".d_br, .def-info").forEach(el => el.remove());
     // doc.querySelectorAll(".grammar").forEach(el => el.remove())
     // doc.querySelectorAll(".bb").forEach(el => el.remove)
 }
@@ -100,10 +102,14 @@ function handleDOM(
     const catalog: NonNullable<CambridgeSearchResult['catalog']> = [];
     const audio: { us?: string; uk?: string; } = {};
 
+    // Only the first `class=.pr.dictionary` is useful. 
+    // The second is the translation of the first one. 
+    // Strange enough but just ignore it.
+    doc.querySelectorAll('.pr.dictionary')[1].remove()
     prune(doc);
 
-    doc.querySelectorAll('.entry-body__el').forEach(($entry, i) => {
-        if (!getText($entry, '.headword')) {
+    doc.querySelectorAll('.link.dlink').forEach(($entry, i) => {
+        if (!getText($entry, '.di-title')) {
             return;
         }
 
@@ -151,9 +157,10 @@ function handleDOM(
         });
     });
 
+    // when users search for a phrase
     if (result.length <= 0) {
         // check idiom
-        const $idiom = doc.querySelector('.idiom-block');
+        const $idiom = doc.querySelector('.phrase-block');
         if ($idiom) {
             removeChild($idiom, '.bb.hax');
 
