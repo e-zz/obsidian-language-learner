@@ -125,7 +125,8 @@ import { useEvent } from "@/utils/use";
 import { LearnPanelView } from "./LearnPanelView";
 import { ReadingView } from "./ReadingView";
 import Plugin from "@/plugin";
-import { search } from "@dict/youdao/engine";
+// import { search } from "@dict/youdao/engine";
+import { search } from "@dict/deepl/engine";
 import store from "@/store";
 
 const view: LearnPanelView =
@@ -339,13 +340,15 @@ useEvent(window, "obsidian-langr-search", async (evt: CustomEvent) => {
 		if (plugin.settings.use_machine_trans) {
 			try {
 				let res = await search(sentenceText);
-				if (res && (res.result as any).translation) {
-					let html = (res.result as any).translation as string;
-					filledTrans =
-						html
-							.match(/<p>([^<>]+)<\/p>/g)[1]
-							?.match(/<p>(.*)<\/p>/)[1] ?? null;
-				}
+				filledTrans = res
+				
+				// if (res && (res.result as any).translation) {
+				// 	let html = (res.result as any).translation as string;
+				// 	filledTrans =
+				// 		html
+				// 			.match(/<p>([^<>]+)<\/p>/g)[1]
+				// 			?.match(/<p>(.*)<\/p>/)[1] ?? null;
+				// }
 			} catch (e) {
 				filledTrans = "";
 			}
