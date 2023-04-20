@@ -49,9 +49,10 @@ await esbuild.build({
     format: 'cjs',
     watch: !prod,
     target: 'es2016',
-    logLevel: "info",
+    logLevel: "debug",
     sourcemap: prod ? false : 'inline',
-    minify: prod ? true : false,
+    minify: false,
+    // minify: prod ? true : false,
     treeShaking: true,
     outfile: 'main.js',
 }).catch(() => process.exit(1));
